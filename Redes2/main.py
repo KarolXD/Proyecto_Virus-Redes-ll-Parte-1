@@ -27,7 +27,7 @@ counts()
 def scan():
     infected_list = []
     for f in file_list:
-        virus_def = open("C:/Users/Karol/Desktop/Redes/virus.txt", "r")
+        virus_def = open("viruses.txt", "r")
         file_not_read = False
         print("\n scaning... : {}".format(f))
         hasher = hashlib.md5()
@@ -52,7 +52,9 @@ def scan():
     print("Infected files found : {}".format(infected_list))
     deleteOrnot = str(input("would you like to delete the infected files y=yes n=no (y/n)"))
     virus_def.close()
-    remove("C:/Users/Karol/Desktop/Redes/virus.txt")
+    remove("viruses.txt")
+
+    #remove("C:/Users/Karol/Desktop/Redes/viruses.txt")
 
     if deleteOrnot.upper() == "Y":
         for infected in infected_list:
