@@ -27,7 +27,7 @@ Como vemos acontinuación
 *  **Paso #2**
 Dirigirse a la carpeta donde se clonó el repositorio, para comprobar si efectivamente la clonación fue exitosa
 
-![](https://github.com/KarolXD/Proyecto_Virus-Redes-ll-Parte-1/blob/main/Redes2/Fotos/Clonacion1.PNG)
+![](https://github.com/KarolXD/Proyecto_Virus-Redes-ll-Parte-1/blob/main/Redes2/Fotos/Clonacion2.PNG)
 
 # Restauración de la Base de datos
 
