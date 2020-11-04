@@ -1,6 +1,7 @@
-import socket
+import socket, gui
 import sys
 
+gui.mywindow()
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 

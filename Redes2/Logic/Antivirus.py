@@ -1,7 +1,7 @@
 import os, sys, time, hashlib
 from os import remove
 file_list = []
-root_dir = "C:/Users/Karol/PycharmProjects/Proyecto_Virus-Redes-ll-Parte-1/Redes2"
+root_dir = "/Proyecto_Virus-Redes-ll-Parte-1/Redes2"
 print(" Start Scan....")
 
 for subdir, dirs, files in os.walk(root_dir):
@@ -27,7 +27,7 @@ counts()
 def scan():
     infected_list = []
     for f in file_list:
-        virus_def = open("viruses.txt", "r")
+        virus_def = open("/viruses.txt", "r")
         file_not_read = False
         print("\n scaning... : {}".format(f))
         hasher = hashlib.md5()
@@ -52,7 +52,7 @@ def scan():
     print("Infected files found : {}".format(infected_list))
     deleteOrnot = str(input("would you like to delete the infected files y=yes n=no (y/n)"))
     virus_def.close()
-    remove("viruses.txt")
+    remove("/viruses.txt")
 
     #remove("C:/Users/Karol/Desktop/Redes/viruses.txt")
 
