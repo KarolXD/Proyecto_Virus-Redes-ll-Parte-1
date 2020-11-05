@@ -22,7 +22,7 @@ def mssql_connection():
     try:
         cnx = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
                               "Server=DESKTOP-V2VCPIJ;"
-                              "Database=Redes2;"
+                              "Database=Proyecto_Redesll_Parte1;"
                               "UID=sa;"
                               "PWD=123456;"
                               "Trusted_Connection=yes;")
@@ -43,7 +43,7 @@ def get_data_from_sql(sp):
     try:
         con = mssql_connection()
         cur = con.cursor()
-        cur.execute("EXECUTE" + sp)
+        cur.execute("EXECUTE " + sp)
         data_return = cur.fetchall()
         con.commit()
         return data_return
