@@ -27,6 +27,6 @@ def socket_client():
             print('received {!r}'.format(data))
 
     finally:
-        print('closing socket')
+        #print('closing socket')
         sock.close()
-socket_client()
+#socket_client()
