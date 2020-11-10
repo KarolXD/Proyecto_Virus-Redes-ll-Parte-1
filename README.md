@@ -74,6 +74,11 @@ Necesito:
 
 * Python
 
+* Controlador de Versiones
+
+* Controlador de tareas
+
+
 
 
 # Instalando
@@ -92,12 +97,25 @@ Nota: Para este proyecto, utilizamos el Pycharm Community
 Para descargar Python, vamos al siguiente enlace: https://www.python.org/downloads/
 
 
+*  **Gestor de Base de datos**
+
+Para  descargar el gestor de base de datos, se dirigen a el siguiente enlace: https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15
+
+
+
+* **Controlador de Versiones**
+
+Para el controlador de versiones, usamos Github y GitKraken
+
+
+* **Controlador de Tareas**
+Para el control de tareas, se utilizó Trello, enlace para registrarse: https://trello.com/
 
 # Construido con
 
 * **Python:** Se utilizó como Lenguaje de Programación
 
-* **Mysql:** Se utilizó como Gestor de Base de datos
+* **Sql Server:** Se utilizó como Gestor de Base de datos
 
 * **Git:** Se utilizó como controlador de versiones y tareas
 
@@ -110,6 +128,8 @@ Para descargar Python, vamos al siguiente enlace: https://www.python.org/downloa
 * Version python 3.7
 
 * Version Pycharm: 202
+
+* Version SqlServer Management Studio  2019
 
 
 
@@ -132,6 +152,8 @@ En los siguientes enlaces, fueron donde tomamos  feedback para la contrucción d
 https://decodigo.com/python-borar-archivo
 
 https://www.youtube.com/watch?v=QDdQtuRCh_g
+
+https://micro.recursospython.com/recursos/como-copiar-o-mover-un-archivo.html
 
 etc.
 
