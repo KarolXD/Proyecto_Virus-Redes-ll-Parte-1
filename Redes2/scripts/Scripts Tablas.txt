@@ -1,0 +1,72 @@
+CREATE DATABASE [Proyecto_Redesll_Parte1]
+USE [Proyecto_Redesll_Parte1]
+GO
+
+
+CREATE TABLE [Customer].[Customer](
+	[customer_id] [int] IDENTITY(1,1) NOT NULL,
+	[customer_card] [varchar](30) NOT NULL,
+	[customer_password] [varchar](30) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[customer_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+-------------------------------------------------------------------------
+CREATE TABLE [Files].[Files_Customer](
+	[files_Customer_id] [int] IDENTITY(1,1) NOT NULL,
+	[files_Customer_HastCode] [varchar](max) NOT NULL,
+	[customer_id] [int] NOT NULL,
+	[files_name] [varchar](max) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[files_Customer_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+ALTER TABLE [Files].[Files_Customer]  WITH CHECK ADD  CONSTRAINT [fk_customer] FOREIGN KEY([customer_id])
+REFERENCES [Customer].[Customer] ([customer_id])
+GO
+
+ALTER TABLE [Files].[Files_Customer] CHECK CONSTRAINT [fk_customer]
+GO
+---------------------------------------------------------------------------
+CREATE TABLE [Files].[Maching_Files_Customer](
+	[files_Customer_id] [int] IDENTITY(1,1) NOT NULL,
+	[files_Customer_HastCode] [varchar](max) NOT NULL,
+	[customer_id] [int] NOT NULL,
+	[files_name] [varchar](max) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[files_Customer_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+---------------------------------------------------------------------------
+CREATE TABLE [Files].[quarantine](
+	[quarantine_id] [int] IDENTITY(1,1) NOT NULL,
+	[hast_file_danger] [varchar](max) NULL,
+	[files_name] [varchar](max) NULL,
+	[file_status] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[quarantine_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+ALTER TABLE [Files].[quarantine] ADD  DEFAULT ('danger') FOR [file_status]
+GO
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,92 @@
+USE [Proyecto_Redesll_Parte1]
+GO
+
+
+CREATE PROCEDURE [Customer].[autentication] (@customer_card varchar(30))
+AS SET NOCOUNT ON
+BEGIN
+
+SELECT customer_id, count(*) as counter1 FROM Customer.Customer WHERE  customer_card=@customer_card
+group by customer_id
+
+END
+GO
+
+-----------------------------------------------------------------------------
+CREATE PROCEDURE [Customer].[registerCustomer] (@customer_card varchar(30), @customer_password varchar(30))
+AS SET NOCOUNT ON
+BEGIN
+INSERT INTO Customer.Customer (customer_card,customer_password) VALUES(@customer_card,@customer_password)
+select @customer_card
+END
+GO
+------------------------------------------------------------------------------
+
+CREATE PROCEDURE [Files].[getFiles] (@files_Customer_HastCode varchar(max),@customer_id varchar(30), @file_name varchar(max))
+AS SET NOCOUNT ON
+BEGIN
+
+if exists(select files_Customer_HastCode , count(*) as [counter], @file_name as [file name], @customer_id  as[customer_id] from Files.Files_Customer where 
+files_Customer_HastCode=@files_Customer_HastCode and customer_id=@customer_id
+group by files_Customer_HastCode) begin
+
+select files_Customer_HastCode , count(*) as [counter], @file_name as [file name], @customer_id  as[customer_id] from Files.Files_Customer where 
+files_Customer_HastCode=@files_Customer_HastCode and customer_id=@customer_id
+group by files_Customer_HastCode
+print('Se va para cuarentena xq ya existe y es peligroso')
+end
+
+else begin
+select  @files_Customer_HastCode,0 as [counter], @file_name as [file name], @customer_id  as[customer_id]
+print('Hast nuevo, tiene que registrarse nuevamnete')
+end
+
+
+END
+GO
+-----------------------------------------------------------------------------------
+
+CREATE PROCEDURE [Files].[register_files] (@files_Customer_HastCode varchar(MAX),@customer_id varchar(30),@files_name varchar(max))
+AS SET NOCOUNT ON
+declare @count int
+BEGIN
+
+if not  exists (select * from [Files].[Files_Customer] where [files_Customer_HastCode]=@files_Customer_HastCode 
+OR  files.Files_Customer.files_name=@files_name)begin
+INSERT INTO [Files].[Files_Customer]( [files_Customer_HastCode], [customer_id], files_name)
+VALUES(@files_Customer_HastCode,@customer_id,@files_name)
+select @files_Customer_HastCode,1
+end
+
+else 
+
+begin
+INSERT INTO [Files].[Maching_Files_Customer]
+( [files_Customer_HastCode], [customer_id], files_name)
+VALUES(@files_Customer_HastCode,@customer_id,@files_name)
+select @files_Customer_HastCode,0
+END
+END
+GO
+------------------------------------------------------------------------------
+
+
+CREATE PROCEDURE [Files].[register_quarantine](@hast_file_danger varchar(max),@Filename varchar(max))
+AS SET NOCOUNT ON
+declare @counterFiles int
+BEGIN
+if exists (select * from files.Files_Customer where files_Customer_HastCode=@hast_file_danger )begin
+INSERT INTO files.quarantine (hast_file_danger,files_name) VALUES(@hast_file_danger, @Filename)
+--delete from files.Files_Customer where files_Customer_HastCode=@hast_file_danger and files_name=@Filename
+select @Filename,1
+end
+else
+begin
+select @Filename,0
+end
+END
+GO
+
+
+
+

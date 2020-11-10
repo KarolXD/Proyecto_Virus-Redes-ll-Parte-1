@@ -62,7 +62,8 @@ def mover_archivo(x,filename):
         origen = 'C:/Users/Karol/Desktop/FilesR/' + filename
         s = 'C:/Users/Karol/Desktop/quarantine/'
         if os.path.exists(origen):
-            ruta = shutil.move(origen, s)
+            ruta = shutil.copy(origen, s)
+               #  shutil.copy copia shutil.move mueve
             print('El archivo' + filename + ', con hast: ' + x + ' ha sido movido a', s)
         else:
             print('El archivo origen no existe')
@@ -85,6 +86,7 @@ def register_quarantine(p,filename):
             for re in data:
                 if re[1]==1:
                     print('Se registro con exito en Q')
+                    con_sql.close()
                     mover_archivo(p, filename)
                 if re[1]==0:
                     print('No registro con exito en Q')
@@ -92,8 +94,8 @@ def register_quarantine(p,filename):
 
     except IOError as e:
         print('Error (0) en registrar el archivo en Q').format(e.errno, e.strerror)
-    finally:
-        con_sql.close()
+
+
 
 
 def register_files(has,card,filename):
@@ -107,7 +109,12 @@ def register_files(has,card,filename):
             print('No data')
             #sys.exit(0)
         else:
-            print('Se ha registrado correctamente el archivo ')
+            for row in data:
+                if row[1]==1:
+                    print('Se ha registrado correctamente el archivo ')
+                if row[1]==0:
+                    print('Se ha registrado correctamente el archivo ')
+                    register_quarantine(has,filename)
 
     except IOError as e:
         print('Error (0) in register Files').format(e.errno, e.strerror)
@@ -162,8 +169,8 @@ def create_hast():
                 if row[1] ==1:
                     print("hast existente, se mueve a quantentena")
                     for xb in imagenes:
-                         register_quarantine(digest, xb)
-                         time.sleep(2)
+                        register_quarantine(digest, xb)
+                        time.sleep(2)
 
                          #Ya existe el hash, por ende pasa a quarentena
 
