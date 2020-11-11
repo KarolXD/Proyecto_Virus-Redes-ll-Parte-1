@@ -33,27 +33,34 @@ Dirigirse a la carpeta donde se clonó el repositorio, para comprobar si efectiv
 
 * **Paso #1**
 
-Instalar gestor de base de datos Mysql
+Instalar gestor de base de datos, para este demo se utilizó Sql Server
 
 * **Paso #2** 
 
 Configuración de Credenciales
+Para este demo, usamos un login en SqlServer
+
+![](https://github.com/KarolXD/Proyecto_Virus-Redes-ll-Parte-1/blob/main/Redes2/Fotos/LoginSQL.PNG)
+
 
 * **Paso #3**
+Pasos para crear el restore en el motor de la Base de datos:
+Presionamos el motor de BD, click derecho: Y vamos a la siguiente ruta: Tasks/Restore/Database
 
-Importar el script
+Como podemos ver acontinuación:
 
-* **Paso #3.1**
+![](https://github.com/KarolXD/Proyecto_Virus-Redes-ll-Parte-1/blob/main/Redes2/Fotos/Restore1BD.PNG)
 
-Dirigirse a el apartado Data Import
+**Nota**: En el repositorio, en la carpeta scripts, se encuentra el .bak para hacer el restore, asi como los demas scripts, de las tablas que lleva la Base de datos, así como
+los procedimientos almacenados
+
+* **Paso #4**
+Configurar el Restore:
+
+Agregando una ruta, de donde se encuentra el .bak, asi como selecccionando la BD destino, donde se restaurará
 Como podemos ver acontinuación
 
-* **Paso #3.2**
-Seleccionar el back up, donde lo hayas guardado.
-Como podemos ver a continuación
-
-
-
+![](https://github.com/KarolXD/Proyecto_Virus-Redes-ll-Parte-1/blob/main/Redes2/Fotos/Restore2BD.PNG)
 
 
 
@@ -85,7 +92,7 @@ Necesito:
 En este apartado, se brindan una serie de ejemplos paso a paso que le indican cómo ejecutar un entorno de desarrollo
 
 
-* **IDE**
+* **IDE Pycharm**
 
 Para descargar el IDE usado en este proyecto, se debe dirigir a el siguiente enlace : https://www.jetbrains.com/pycharm/download/
 Y simplemente presiona sobre el botón 'Download'
@@ -106,6 +113,9 @@ Para  descargar el gestor de base de datos, se dirigen a el siguiente enlace: ht
 * **Controlador de Versiones**
 
 Para el controlador de versiones, usamos Github y GitKraken
+
+Github: Alojamiento de repositorio
+Gitkraken: Usado para cambio de versiones en el repositorio
 
 
 * **Controlador de Tareas**
@@ -131,6 +141,7 @@ Para el control de tareas, se utilizó Trello, enlace para registrarse: https://
 
 * Version SqlServer Management Studio  2019
 
+* Version Gitkaten 7.4.0
 
 
 # Autores
