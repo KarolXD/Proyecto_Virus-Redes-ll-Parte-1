@@ -34,7 +34,7 @@ def autentication_customers(card):
         data = get_data_from_sql(query)
 
         if len(data) <= 0:
-            print('No data')
+            print('No data from Autentication')
             #sys.exit(0)
         else:
             global id
@@ -44,9 +44,13 @@ def autentication_customers(card):
                 id = row[0]
                 if row[1] > 0:
                     print('Datos correctos')
+                    from Redes2.Gui.GuiCustomer import horario
+                    horario()
 
-                    from Redes2.Gui.GuiAfterAutentication import  app
-                    app.mainloop()
+                    #from Redes2.Gui.GuiAfterAutentication import  app
+                    #app.mainloop()
+
+
 
                 else:
                     print('Datos Incorrectos')
@@ -99,7 +103,7 @@ def register_quarantine(p,filename,origen,destino):
 
 
 
-def register_files(has,card,filename):
+def register_files(has,card,filename,orige,destino):
     try:
         query = '[FILES].register_files ' + "'" + has + "', "+str(card)+","+"'"+filename+"'"
         print(query)
@@ -115,7 +119,7 @@ def register_files(has,card,filename):
                     print('Se ha registrado correctamente el archivo ')
                 if row[1]==0:
                     print('Se ha registrado correctamente el archivo ')
-                    register_quarantine(has,filename)
+                    register_quarantine(has,filename,orige,destino)
 
     except IOError as e:
         print('Error (0) in register Files').format(e.errno, e.strerror)
@@ -167,7 +171,7 @@ def create_hast(origen,destino):
                     print("Nuevo registro");
                         #Nuevo regisstro entrante, se registra
                     for filename in imagenes:
-                        register_files(digest, id, filename)
+                        register_files(digest, id, filename,origen,destino)
                         time.sleep(2)
 
                 if row[1] ==1:
@@ -200,7 +204,7 @@ def hilo(origen,destino):
         print('Finalizo');
 
 
-def configuracion_horario(ocurrencia,fechaIn,dia,tipoScaneo):
+def configuracion_horario(ocurrencia,fechaIn,dia,tipoescaneo):
     origen_dir="C:/Users/Karol/Desktop/FilesR/"
     destino_dir="C:/Users/Karol/Desktop/quarantine/"
     origen_c = "C:/"
@@ -209,29 +213,29 @@ def configuracion_horario(ocurrencia,fechaIn,dia,tipoScaneo):
 
     if ocurrencia=='Diario':
         print("Diario")
-        if tipoScaneo ==8: #es TOTAL
+        if tipoescaneo ==8: #es TOTAL
             print("Escaneo TOTAL disco C:")
             diario(fechaIn,origen_c,destino_c);
-        elif tipoScaneo == 9:#solo DIR
+        elif tipoescaneo == 9:#solo DIR
             print("Escaneo Completo ")
             diario(fechaIn,origen_dir,destino_dir)
 
     if ocurrencia=="Semanal":
-        print("Semanal",tipoScaneo)
-        if tipoScaneo == 8:  # es TOTAL
+        print("Semanal",tipoescaneo)
+        if tipoescaneo == 8:  # es TOTAL
             print("Escaneo TOTAL disco C:")
             semanal(fechaIn,dia, origen_c, destino_c);
-        elif tipoScaneo == 9:  # solo DIR
+        elif tipoescaneo == 9:  # solo DIR
             print("Escaneo Completo ")
             semanal(fechaIn,dia, origen_dir, destino_dir)
 
 
     if ocurrencia=='Mensual':
         print("Mensual")
-        if tipoScaneo == 8:  # es TOTAL
+        if tipoescaneo == 8:  # es TOTAL
             print("Escaneo TOTAL disco C:")
             mensual(fechaIn, dia, origen_c, destino_c);
-        elif tipoScaneo == 9:  # solo DIR
+        elif tipoescaneo == 9:  # solo DIR
             print("Escaneo Completo ")
             mensual(fechaIn, dia, origen_dir, destino_dir)
 

@@ -16,7 +16,7 @@ def socket_server():
     while True:
         # Wait for a connection
         print('waiting for a connection')
-        obtener_datos()
+        #obtener_datos()
         connection, client_address = sock.accept()
         try:
             print('connection from', client_address)
@@ -36,4 +36,4 @@ def socket_server():
             # Clean up the connection
             connection.close()
 
-socket_server()
+#socket_server()

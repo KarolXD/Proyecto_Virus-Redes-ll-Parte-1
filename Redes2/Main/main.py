@@ -1,3 +1,3 @@
-from Redes2.Gui.GuiMain import app
+from Redes2.Gui.GuiCustomer import app
 app.mainloop()
 

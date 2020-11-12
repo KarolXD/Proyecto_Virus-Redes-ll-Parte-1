@@ -1,28 +1,37 @@
 import tkinter as tk
+import time
+import datetime as dt
 from Redes2.Logic.Functions import autentication_customers,registerCustomers
 
 
+#metodo que registra
 def registrar():
     print('Datos desde formulario')
     card=fn.get()
     password=fn2.get()
     print(f"Nombre:{card}{password}")
     registerCustomers(card,password)
-
     #parcear  print(f "Nombre:")
+
+def call_configuration():
+    valor0 = ocurre.get
+    valor1 = fechaInicio.get()
+    valor3 = dia.get()
+    valor4 = tipoescaneo.get()
+    print("Tipo scaneo", valor0, valor1, valor3, valor4)
+    from Redes2.Logic.socket_echo_client import socket_client
+    socket_client()
+    #configuracion_horario(valor0, valor1, valor3, valor4)
+
+#Metodo que valida la autenticacion
 def call_autentication():
     card = valor.get()
-    print('valor car'+card)
+    #print('valor car'+card)
     autentication_customers(card)
 
 
-def createNewWindowAfterAutentication():
-    newWindow = tk.Toplevel(app)
-    newWindow.geometry("500x400")
-    b1 = tk.Button(newWindow, text="Boton", fg='white', bg='brown', command=registrar,
-                   font=("arial", 12, "bold"))  # .pack()
-    b1.place(x=200, y=210)
 
+#Ventana para Registrarme
 def createNewWindow():
     newWindow = tk.Toplevel(app)
     newWindow.geometry("400x300")
@@ -56,10 +65,17 @@ valor=tk.StringVar()
 fn=tk.StringVar()
 fn2=tk.StringVar()
 
+ocurre = tk.StringVar()
+fechaInicio = tk.StringVar()
+dia = tk.IntVar()
+tipoescaneo = tk.IntVar()
+
 label0 = tk.Label(app, text="Bienvenidos al sistema ", relief="solid", fg='black',
                    font=("Verdana", 16, ""))  # .pack()
 label0.place(x=60, y=20)
 
+
+#Ventana para autenticarme
 def createNewWindowAutentication():
 
     newWindow = tk.Toplevel(app)
@@ -73,7 +89,7 @@ def createNewWindowAutentication():
     entry1 = tk.Entry(newWindow, textvar=valor)
     entry1.place(x=100, y=130)
 
-    b1 = tk.Button(newWindow, text="Sign In", fg='white', bg='brown', command=call_autentication,
+    b1 = tk.Button(newWindow, text="Log In", fg='white', bg='brown', command=call_autentication,
                 font=("arial", 12, "bold"))  # .pack()
     b1.place(x=100, y=170)
 
