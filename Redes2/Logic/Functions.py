@@ -56,10 +56,12 @@ def autentication_customers(card):
         con_sql.close()
 
 
-def mover_archivo(x,filename):
+def mover_archivo(x,filename,origen,destino):
     try:
-        origen = 'C:/Users/Karol/Desktop/FilesR/' + filename
-        s = 'C:/Users/Karol/Desktop/quarantine/'
+        origen=origen+filename
+        s=destino
+        #origen = 'C:/Users/Karol/Desktop/FilesR/' + filename
+        #s = 'C:/Users/Karol/Desktop/quarantine/'
         if os.path.exists(origen):
             ruta = shutil.copy(origen, s)
                #  shutil.copy copia shutil.move mueve
@@ -71,7 +73,7 @@ def mover_archivo(x,filename):
     finally:
         print('XD')
 
-def register_quarantine(p,filename):
+def register_quarantine(p,filename,origen,destino):
     try:
         query = 'Files.register_quarantine ' + "'" + p +"',"+"'"+filename+"'"
         #query = '[Files].[register_quarantine] ' + "'" + hash + "'" + "," + "'" + filename + "'"
@@ -84,11 +86,11 @@ def register_quarantine(p,filename):
         else:
             for re in data:
                 if re[1]==1:
-                    print('Se registro con exito en Q')
+                    print('Se registro con exito en Quarentena')
                     con_sql.close()
-                    mover_archivo(p, filename)
+                    mover_archivo(p, filename,origen,destino)
                 if re[1]==0:
-                    print('No registro con exito en Q')
+                    print('No registro con exito en Quarentena')
 
 
     except IOError as e:
@@ -124,9 +126,10 @@ def register_files(has,card,filename):
 
 
 
-def create_hast():
+def create_hast(origen,destino):
     try:
-        ejemplo_dir = 'C:/Users/Karol/Desktop/FilesR/'
+        ejemplo_dir=origen
+        #ejemplo_dir = 'C:/Users/Karol/Desktop/FilesR/'
         contenido = os.listdir(ejemplo_dir)
         imagenes = []
         for fichero in contenido:
@@ -137,7 +140,8 @@ def create_hast():
         md5_hash = hashlib.md5()
 
         for x in imagenes:
-            a_file = open("C:/Users/Karol/Desktop/FilesR/"+x, "rb")
+            a_file = open(origen+x, "rb")
+            # a_file = open("C:/Users/Karol/Desktop/FilesR/"+x, "rb")
             content = a_file.read()
             md5_hash.update(content)
             digest = md5_hash.hexdigest()
@@ -157,7 +161,8 @@ def create_hast():
 
                 #sys.exit(0)
         else:
-             for row in data:
+
+            for row in data:
                 if row[1] ==0:
                     print("Nuevo registro");
                         #Nuevo regisstro entrante, se registra
@@ -168,7 +173,7 @@ def create_hast():
                 if row[1] ==1:
                     print("hast existente, se mueve a quantentena")
                     for xb in imagenes:
-                        register_quarantine(digest, xb)
+                        register_quarantine(digest, xb,origen,destino)
                         time.sleep(2)
 
                          #Ya existe el hash, por ende pasa a quarentena
@@ -181,10 +186,10 @@ def create_hast():
 #t=threading.Thread(target=create_hast)
 
 
-def hilo():
+def hilo(origen,destino):
     try:
         while True:
-            create_hast()
+            create_hast(origen,destino)
             time.sleep(3)
 
 
@@ -195,33 +200,53 @@ def hilo():
         print('Finalizo');
 
 
-def configuracion_horario(ocurrencia,fechaIn,dia):
+def configuracion_horario(ocurrencia,fechaIn,dia,tipoScaneo):
+    origen_dir="C:/Users/Karol/Desktop/FilesR/"
+    destino_dir="C:/Users/Karol/Desktop/quarantine/"
+    origen_c = "C:/"
+    destino_c="C:/quarentena"
+
 
     if ocurrencia=='Diario':
         print("Diario")
-        diario(fechaIn);
-
+        if tipoScaneo ==8: #es TOTAL
+            print("Escaneo TOTAL disco C:")
+            diario(fechaIn,origen_c,destino_c);
+        elif tipoScaneo == 9:#solo DIR
+            print("Escaneo Completo ")
+            diario(fechaIn,origen_dir,destino_dir)
 
     if ocurrencia=="Semanal":
-        print("Semanal")
-        semanal(fechaIn,dia);
+        print("Semanal",tipoScaneo)
+        if tipoScaneo == 8:  # es TOTAL
+            print("Escaneo TOTAL disco C:")
+            semanal(fechaIn,dia, origen_c, destino_c);
+        elif tipoScaneo == 9:  # solo DIR
+            print("Escaneo Completo ")
+            semanal(fechaIn,dia, origen_dir, destino_dir)
+
 
     if ocurrencia=='Mensual':
         print("Mensual")
-        mensual(fechaIn,dia);
+        if tipoScaneo == 8:  # es TOTAL
+            print("Escaneo TOTAL disco C:")
+            mensual(fechaIn, dia, origen_c, destino_c);
+        elif tipoScaneo == 9:  # solo DIR
+            print("Escaneo Completo ")
+            mensual(fechaIn, dia, origen_dir, destino_dir)
 
-def diario(fechaIn):
+def diario(fechaIn,origen,destino):
    fecha_sistema=time.strftime('%Y/%m/%d %H:%M:%S')
    hora_sistema = time.strftime('H:%M:%S')
 
    if fechaIn<hora_sistema:
         print("Configuracion Diaria")
-        hilo()
+        hilo(origen,destino)
    else:
         print("El escaneo no se puede realizar, verifique las fechas.")
 
 
-def semanal(fechaIn,dia):
+def semanal(fechaIn,dia,origen,destino):
     fecha_sistema = time.strftime('%Y/%m/%d %H:%M')
     hora_sistema=time.strftime('%H:%M')
 
@@ -231,12 +256,12 @@ def semanal(fechaIn,dia):
     if (fechaIn <=hora_sistema or  fechaIn>=hora_sistema) and (dia_system==dia):
           print("--Configuracion Semanal--")
           print("--Se scanean todos los --", dia)
-          hilo()
+          hilo(origen,destino)
     else:
           print("El escaneo no se puede realizar en esas fechas -Semanal")
 
 
-def mensual(fechaIn,dia):
+def mensual(fechaIn,dia,origen,destino):
     fecha_sistema = time.strftime('%Y/%m/%d')
     hora_sistema = time.strftime('H:%M:%S')
     dia_sistema = time.strftime('%a')
@@ -246,7 +271,7 @@ def mensual(fechaIn,dia):
 
     if (fechaIn <=hora_sistema or  fechaIn>=hora_sistema) and (dia_system==dia):
         print("---Configuracion Mensual--")
-        hilo()
+        hilo(origen,destino)
 
     else:
         print("No es posible realizar el escaneo, Verifique sus fechas.")
