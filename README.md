@@ -166,5 +166,6 @@ https://www.youtube.com/watch?v=QDdQtuRCh_g
 
 https://micro.recursospython.com/recursos/como-copiar-o-mover-un-archivo.html
 
+https://python-para-impacientes.blogspot.com/2014/02/operaciones-con-fechas-y-horas.html
 etc.
 
