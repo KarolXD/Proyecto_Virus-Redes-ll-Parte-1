@@ -1,4 +1,5 @@
 import threading,time
+import datetime
 
 from Redes2.data.ConfigurationDB import  get_data_from_sql
 from Redes2.data.ConfigurationDB import  mssql_connection
@@ -43,9 +44,7 @@ def autentication_customers(card):
                 id = row[0]
                 if row[1] > 0:
                     print('Datos correctos')
-                    from Redes2.Logic.socket_echo_client import socket_client
-                    socket_client()
-                    hilo()
+
                     from Redes2.Gui.GuiAfterAutentication import  app
                     app.mainloop()
 
@@ -183,15 +182,11 @@ def create_hast():
 
 
 def hilo():
-
     try:
-
         while True:
-            #t.start()
-            #t.join()
             create_hast()
             time.sleep(3)
-            #t.stop()
+
 
 
     except IOError as e:
@@ -200,23 +195,80 @@ def hilo():
         print('Finalizo');
 
 
-def configuracion_horario(ocurrencia,fechaIn,fechaFin,lunes,martes,miercoles,jueves,viernes,sabado,domingo):
-
-    if ocurrencia=='Mensual':
-        print("Mestrual")
+def configuracion_horario(ocurrencia,fechaIn,dia):
 
     if ocurrencia=='Diario':
         print("Diario")
+        diario(fechaIn);
+
 
     if ocurrencia=="Semanal":
         print("Semanal")
+        semanal(fechaIn,dia);
 
-def diario(fechaIn,fechaFin):
-    print("Configuracion Diaria")
+    if ocurrencia=='Mensual':
+        print("Mensual")
+        mensual(fechaIn,dia);
+
+def diario(fechaIn):
+   fecha_sistema=time.strftime('%Y/%m/%d %H:%M:%S')
+   hora_sistema = time.strftime('H:%M:%S')
+
+   if fechaIn<hora_sistema:
+        print("Configuracion Diaria")
+        hilo()
+   else:
+        print("El escaneo no se puede realizar, verifique las fechas.")
 
 
-def semanal(fechaIn,fechaFin,lunes,martes,miercoles,jueves,viernes,sabado,domingo):
-    print("Configuraion Semanal")
+def semanal(fechaIn,dia):
+    fecha_sistema = time.strftime('%Y/%m/%d %H:%M')
+    hora_sistema=time.strftime('%H:%M')
 
-def mensual(fechaIn,fechaFin,lunes,martes,miercoles,jueves,viernes,sabado,domingo):
-    print("Configuracion Mensual")
+    dia_sistema=time.strftime('%w') # me devuelve el numero del dia de la semana del sistema
+    dia_system =int(dia_sistema)
+
+    if (fechaIn <=hora_sistema or  fechaIn>=hora_sistema) and (dia_system==dia):
+          print("--Configuracion Semanal--")
+          print("--Se scanean todos los --", dia)
+          hilo()
+    else:
+          print("El escaneo no se puede realizar en esas fechas -Semanal")
+
+
+def mensual(fechaIn,dia):
+    fecha_sistema = time.strftime('%Y/%m/%d')
+    hora_sistema = time.strftime('H:%M:%S')
+    dia_sistema = time.strftime('%a')
+    dia_sistema = time.strftime('%w')  # me devuelve el numero del dia de la semana del sistema
+    dia_system = int(dia_sistema) #parseo
+    print("El proximo scaneo es el mes: Diciembre: y dia:",dia)
+
+    if (fechaIn <=hora_sistema or  fechaIn>=hora_sistema) and (dia_system==dia):
+        print("---Configuracion Mensual--")
+        hilo()
+
+    else:
+        print("No es posible realizar el escaneo, Verifique sus fechas.")
+
+
+def obtener_datos():
+    try:
+        query = '  [FILES].getAllFiles'
+        con_sql = mssql_connection()
+        data = get_data_from_sql(query)
+
+        if len(data) <= 0:
+            print('No data')
+            #sys.exit(0)
+        else:
+            for datos in data:
+                print('Nombre archivo '+datos[0])
+                print('firmas'+datos[1])
+                print('estado '+datos[2])
+                print('cliente: jaha ')
+        return data;
+    except IOError as e:
+        print('Error (0) in register Customer').format(e.errno, e.strerror)
+    finally:
+        con_sql.close()

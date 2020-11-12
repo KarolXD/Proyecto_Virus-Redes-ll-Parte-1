@@ -1,5 +1,6 @@
 import socket
 import sys
+from Redes2.Logic.Functions import  obtener_datos
 
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -15,6 +16,7 @@ def socket_server():
     while True:
         # Wait for a connection
         print('waiting for a connection')
+        obtener_datos()
         connection, client_address = sock.accept()
         try:
             print('connection from', client_address)

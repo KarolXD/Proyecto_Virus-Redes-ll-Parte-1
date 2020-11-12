@@ -3,6 +3,9 @@ USE [Proyecto_Redesll_Parte1]
 GO
 
 
+CREATE SCHEMA Customer
+CREATE SCHEMA Files
+
 CREATE TABLE [Customer].[Customer](
 	[customer_id] [int] IDENTITY(1,1) NOT NULL,
 	[customer_card] [varchar](30) NOT NULL,

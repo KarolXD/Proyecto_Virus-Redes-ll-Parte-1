@@ -2,6 +2,12 @@ USE [Proyecto_Redesll_Parte1]
 GO
 
 
+CREATE procedure FILES.getAllFiles
+as set nocount on;
+ begin
+select files_name,hast_file_danger,file_status from [Files].[quarantine] group by files_name,hast_file_danger,file_status
+end
+
 CREATE PROCEDURE [Customer].[autentication] (@customer_card varchar(30))
 AS SET NOCOUNT ON
 BEGIN
