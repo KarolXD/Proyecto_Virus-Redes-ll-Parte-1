@@ -77,7 +77,7 @@ def createNewWindowAutentication():
                 font=("arial", 12, "bold"))  # .pack()
     b1.place(x=100, y=170)
 
-buttonExample = tk.Button(app, 
+buttonExample = tk.Button(app,
               text="Autentication",bg='brown',fg='white',
               command=createNewWindowAutentication)
 buttonExample.pack()
@@ -92,9 +92,3 @@ buttonRegister.pack()
 buttonRegister.place(x=190,y=70)
 
 app.mainloop()
-
-
-
-
-
-

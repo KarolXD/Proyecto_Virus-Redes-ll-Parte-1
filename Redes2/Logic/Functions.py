@@ -199,3 +199,24 @@ def hilo():
     finally:
         print('Finalizo');
 
+
+def configuracion_horario(ocurrencia,fechaIn,fechaFin,lunes,martes,miercoles,jueves,viernes,sabado,domingo):
+
+    if ocurrencia=='Mensual':
+        print("Mestrual")
+
+    if ocurrencia=='Diario':
+        print("Diario")
+
+    if ocurrencia=="Semanal":
+        print("Semanal")
+
+def diario(fechaIn,fechaFin):
+    print("Configuracion Diaria")
+
+
+def semanal(fechaIn,fechaFin,lunes,martes,miercoles,jueves,viernes,sabado,domingo):
+    print("Configuraion Semanal")
+
+def mensual(fechaIn,fechaFin,lunes,martes,miercoles,jueves,viernes,sabado,domingo):
+    print("Configuracion Mensual")
