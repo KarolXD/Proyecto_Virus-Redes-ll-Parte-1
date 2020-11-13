@@ -16,7 +16,7 @@ b2=Button(mywindowServer, text="Iniciar Servidor", fg='white', bg='brown', comma
 b2.place(x=20,y=200)
 
 T = Text(mywindowServer, height=15, width=50)
-T.insert(END,"HOLA")# str(obtener_datos()))
+T.insert(END,str(obtener_datos()))
 b2.place(x=90,y=300)
 T.pack()
 
